@@ -1,7 +1,7 @@
 function timeSeriesChart() {
   var margin = {top: 20, right: 20, bottom: 20, left: 20},
-      width = 760,
-      height = 120,
+      width = 800,
+      height = 250,
       xValue = function(d) { return d[0]; },
       yValue = function(d) { return d[1]; },
       xScale = d3.time.scale(),
@@ -26,7 +26,7 @@ function timeSeriesChart() {
 
       // Update the y-scale.
       yScale
-          .domain([0, d3.max(data, function(d) { return d[1]; })])
+          .domain([d3.min([0, d3.min(data, function(d) { return d[1]; })]), d3.max(data, function(d) { return d[1]; })])
           .range([height - margin.top - margin.bottom, 0]);
 
       // Select the svg element, if it exists.
@@ -39,24 +39,24 @@ function timeSeriesChart() {
       gEnter.append("g").attr("class", "x axis");
 
       // Update the outer dimensions.
-      svg .attr("width", width)
-          .attr("height", height);
-
+      svg .attr("preserveAspectRatio", "xMidYMid meet")
+          .attr("viewBox", "0 0 "+ width +" "+ height);
       // Update the inner dimensions.
       var g = svg.select("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+          .attr("transform", "translate("+ margin.left +","+ margin.top +")");
 
       // Update the area path.
-      // g.select(".area")
-      //     .attr("d", area.y0(yScale.range()[0]));
+      g.select(".area")
+          .attr("d", area.y0(yScale.range()[0]));
 
       // Update the line path.
       g.select(".line")
           .attr("d", line);
 
       // Update the x-axis.
+      var zero_x_axis = yScale.range()[0] * ((yScale.domain()[1] - 0) / (yScale.domain()[1] - yScale.domain()[0]))
       g.select(".x.axis")
-          .attr("transform", "translate(0," + yScale.range()[0] + ")")
+          .attr("transform", "translate(0,"+ zero_x_axis +")")
           .call(xAxis);
     });
   }
