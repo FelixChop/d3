@@ -26,7 +26,7 @@ function timeSeriesChart() {
 
       // Update the y-scale.
       yScale
-          .domain([d3.min([0, d3.min(data, function(d) { return d[1]; })]), d3.max(data, function(d) { return d[1]; })])
+          .domain([d3.min([0, d3.min(data, function(d) { return d[1]; })]), d3.max([0, d3.max(data, function(d) { return d[1]; })])])
           .range([height - margin.top - margin.bottom, 0]);
 
       // Select the svg element, if it exists.

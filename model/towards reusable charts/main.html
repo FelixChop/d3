@@ -8,8 +8,8 @@
 		@import url(//fonts.googleapis.com/css?family=PT+Serif|PT+Serif:b|PT+Serif:i|PT+Sans|PT+Sans:b);
 
 		/* SVG responsive text size */
-		svg {
-		  font: 30px sans-serif;
+/*		@media screen and (max-width: 399px) {
+		  svg { font: 20px sans-serif; }
 		}
 
 		@media screen and (min-width: 700px) {
@@ -17,8 +17,8 @@
 		}
 
 		@media screen and (min-width: 400px) and (max-width: 699px) {
-		  svg { font: 20px sans-serif; }
-		}
+		  svg { font: 15px sans-serif; }
+		}*/
 
 		.axis path, .axis line {
 		  fill: none;
@@ -48,14 +48,14 @@
 
 		var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-		d3.csv("sp500.csv", function(data) {
+		d3.csv("../../data/sp500.csv", function(data) {
 		  var formatDate = d3.time.format("%b %Y");
 
 		  d3.select("#example")
 		      .datum(data)
 		    .call(timeSeriesChart()
 		      .x(function(d) { return formatDate.parse(d.date); })
-		      .y(function(d) { return +d.price-1000; })
+		      .y(function(d) { return +d.price-1700; })
 		      .width(width)
 		      .height(width/3)
 		      .margin({top: 20, bottom: 40, left: 20, right: 20})
